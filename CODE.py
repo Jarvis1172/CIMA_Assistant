@@ -14,7 +14,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configure Google Generative AI
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+# genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+
 
 # Predefined PDF file path
 PRESET_PDF_PATH = "SCS_May_Aug25_Pre_seen_14d92606a1.pdf"
@@ -124,4 +126,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
