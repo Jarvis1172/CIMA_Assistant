@@ -82,7 +82,7 @@ def user_input(user_question):
         )
 
         st.write("Reply: ", response["output_text"])
-        st.write(len(response["output_text"]))
+        
     except Exception as e:
         st.error(f"Error processing question: {e}")
 
@@ -126,5 +126,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
