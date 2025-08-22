@@ -17,7 +17,7 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Predefined PDF file path
-PRESET_PDF_PATH = "C:/Users/ase10774/OneDrive - Aitken Spence/Documents/PROJECTS/ChatBot/SCS_May_Aug25_Pre_seen_14d92606a1.pdf"
+PRESET_PDF_PATH = "SCS_May_Aug25_Pre_seen_14d92606a1.pdf"
 file_name = os.path.splitext(os.path.basename(PRESET_PDF_PATH))[0]
 
 def get_pdf_text(pdf_path):
@@ -124,3 +124,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
