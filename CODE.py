@@ -61,7 +61,9 @@ def get_conversational_chain():
     """
 
     # Update to Gemini 1.5
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=1)
+    # model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=1)
+    model = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=1) 
+
 
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
@@ -126,6 +128,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
