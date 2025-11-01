@@ -112,7 +112,7 @@ def main():
             else:
                 st.error("Failed to process the preset PDF.")
     else:
-        st.info("I'm your friendly Annual Report Bot, ready to help you!")
+        st.info("I'm your friendly Teaching Bot, ready to help you!")
 
     user_question = st.text_input(f"Ask a Question from the {file_name}")
 
@@ -128,6 +128,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
