@@ -4,13 +4,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import google.generativeai as genai
-# from langchain.vectorstores import FAISS
-from langchain_community.vectorstores import FAISS
+from langchain.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-import shutil
 
 # Load environment variables
 load_dotenv()
@@ -96,78 +94,29 @@ def main():
 
     st.markdown(
         """
-        - I'm a bot specialized in the document **'2-1-2 pseudocode and flowcharts'**. 😊 
-        - Feel free to ask questions about the document, and I'll do my best to serve you an accurate answer!
-        ---
+        - I'm a brand-new bot, so go easy on me. 😊 
+        - Feel free to ask questions about the document, and I'll do my best to serve you some accurate answers!
         """
     )
 
-    # Initialize session state for document processing flag and reindex trigger
-    if "doc_processed" not in st.session_state:
-        st.session_state.doc_processed = False
-    if "reindex_triggered" not in st.session_state:
-        st.session_state.reindex_triggered = False
-
-
-    is_ready = os.path.exists("faiss_index")
-
-    # --- Document Processing/Re-indexing Logic ---
-    
-    # Check if the FAISS index doesn't exist OR the reindex button was clicked
-    if not is_ready or st.session_state.reindex_triggered:
-        st.info("Starting document processing...")
-        
-        # 1. Clean up old index if it exists or reindex was requested
-        if os.path.exists("faiss_index"):
-            try:
-                # Remove the directory and its contents
-                import shutil
-                shutil.rmtree("faiss_index")
-                st.warning("Removed old FAISS index. Starting fresh!")
-                is_ready = False # Reset readiness state
-            except Exception as e:
-                st.error(f"Could not remove old index: {e}")
-                st.stop()
-        
-        # 2. Process the document
-        with st.spinner("Brewing the document and creating the knowledge base..."):
+    # Check if the FAISS index already exists
+    if not os.path.exists("faiss_index"):
+        # Automatically process the preset PDF on startup
+        with st.spinner("Brewing the document, just a moment..."):
             raw_text = get_pdf_text(PRESET_PDF_PATH)
             if raw_text:
                 text_chunks = get_text_chunks(raw_text)
                 if text_chunks:
-                    # Note: get_vector_store handles saving the new index
-                    if get_vector_store(text_chunks):
-                        st.session_state.doc_processed = True # Mark as processed
-                        st.session_state.reindex_triggered = False # Reset trigger
-                        st.success("Document re-indexed and brewed successfully! Ready for your questions. 👍")
-                        is_ready = True # Update readiness state
-                    # Note: Errors are handled within get_vector_store
+                    get_vector_store(text_chunks)
+                    st.success("Document brewed successfully! Ready for your questions. 👍")
             else:
                 st.error("Failed to process the preset PDF.")
-    
-    # --- Status and Reprocessing Button ---
-
-    if is_ready:
-        st.info(f"I'm your friendly Teaching Bot, ready to help you with **{file_name}**!")
     else:
-        st.error("Document not ready. Please check the PDF path or API key.")
+        st.info("I'm your friendly Teaching Bot, ready to help you!")
 
+    user_question = st.text_input(f"Ask a Question from the {file_name}")
 
-    # Button to force reprocessing
-    if st.button("🔄 Re-process Document (Use if PDF changed)"):
-        # Set the session state flag and rerun the script
-        st.session_state.reindex_triggered = True
-        st.rerun() # Forces the script to run from the top, hitting the processing logic
-
-
-    # --- User Input ---
-
-    user_question = st.text_input(
-        f"Ask a Question from the **{file_name}** document here:",
-        disabled=not is_ready # Disable input if the document isn't ready
-    )
-
-    if user_question and is_ready:
+    if user_question:
         user_input(user_question)
 
     st.markdown(
@@ -178,10 +127,7 @@ def main():
     )
 
 if __name__ == "__main__":
-    # Ensure this import is available for directory deletion
-    import shutil 
     main()
-
 
 
 
