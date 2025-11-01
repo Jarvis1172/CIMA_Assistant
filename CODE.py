@@ -19,7 +19,7 @@ genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
 
 # Predefined PDF file path
-PRESET_PDF_PATH = "SCS_May_Aug25_Pre_seen_14d92606a1.pdf"
+PRESET_PDF_PATH = "2-1-2 pseudocode and flowcharts.pdf"
 file_name = os.path.splitext(os.path.basename(PRESET_PDF_PATH))[0]
 
 def get_pdf_text(pdf_path):
@@ -128,6 +128,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
