@@ -89,8 +89,8 @@ def user_input(user_question):
         st.error(f"Error processing question: {e}")
 
 def main():
-    st.set_page_config(page_title="CIMA Assistant", page_icon="💎")
-    st.header("Welcome to your CIMA Assistant! 👋")
+    st.set_page_config(page_title="Teaching Assistant", page_icon="💎")
+    st.header("Welcome to your Teaching Assistant! 👋")
 
     st.markdown(
         """
@@ -128,6 +128,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
