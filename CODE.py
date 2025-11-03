@@ -15,8 +15,9 @@ load_dotenv()
 
 # Configure Google Generative AI
 # genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
+# genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+api_key = st.secrets["GOOGLE_API_KEY"]
+genai.configure(api_key=api_key)
 
 # Predefined PDF file path
 PRESET_PDF_PATH = "cie-igcse-ict-0417-theory-v4-znotes.pdf"
@@ -128,6 +129,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
